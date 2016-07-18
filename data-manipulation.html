@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Bruce Zhao" />
+  <meta name="dcterms.date" content="2016-07-19" />
+  <title>Data Manipulation in R</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0/css/reveal.css"/>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0/css/theme/black.css" id="theme">
+
+<style type="text/css">
+.reveal section img {
+  background: rgba(255, 255, 255, 0.85);
+}
+</style>
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="mystyle.css"/>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'libs/reveal.js-3.3.0/css/print/pdf.css' : 'libs/reveal.js-3.3.0/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+    <script src="libs/reveal.js-3.3.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Data Manipulation in R</h1>
+    <h2 class="author">Bruce Zhao</h2>
+    <h3 class="date">July 19, 2016</h3>
+</section>
+
+<section id="r" class="slide level2" data-transition="zoom">
+<h1>为什么要用R?</h1>
+<ul>
+<li class="fragment">txt/csv 数据导入excel不够灵活</li>
+<li class="fragment">数据量过大,excel处理缓慢甚至崩溃</li>
+<li class="fragment">行转列,永远的痛…</li>
+<li class="fragment">时间一长完全想不起当初干了啥</li>
+<li class="fragment">…</li>
+</ul>
+</section>
+<section><section id=".-" class="titleslide slide level1"><h1>一. 基本功之数据导入</h1></section><section class="slide level2">
+<h1>载入要用到的包</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#下载</span>
+<span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;readr&quot;</span>,<span class="st">&quot;readxl&quot;</span>,<span class="st">&quot;dplyr&quot;</span>))
+
+<span class="co">#下载一次,以后都可以直接加载使用</span>
+<span class="kw">library</span>(readr)
+<span class="kw">library</span>(readxl)
+<span class="kw">library</span>(dplyr)</code></pre></div>
+</section><section id="txt" class="slide level2">
+<h1>.txt文件导入</h1>
+<p style="text-align:center" class="fragment">
+txt文件一般是用 <code>\t</code> 来隔开数据的.
+</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 一般情况:</span>
+
+<span class="kw">read_tsv</span>(<span class="st">&quot;test-data/test.txt&quot;</span>, <span class="dt">col_names =</span> F) <span class="co">#第一行是否为变量名</span>
+
+<span class="co">#更复杂一点的:</span>
+
+<span class="kw">read_tsv</span>(<span class="st">&quot;test-data/test-encoding.txt&quot;</span>,<span class="dt">col_names =</span> F,
+         <span class="dt">locale =</span> <span class="kw">locale</span>(<span class="dt">encoding =</span> <span class="st">&quot;GB2312&quot;</span>),  <span class="co">#编码问题</span>
+         <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">X6=</span><span class="st">&quot;c&quot;</span>,<span class="dt">X10=</span><span class="st">&quot;c&quot;</span>))      <span class="co">#数据类型</span></code></pre></div>
+<aside class="notes">
+1.test运行示例.<br> 2.上面的两行命令能解决99%以上txt数据的读入问题了.<br> 3.关于编码问题建议下载notepad++,来打开相应的txt/csv文件,然后也能获得文件的编码.
+</aside>
+<strong>
+<p class="fragment">
+两行命令解决90%以上txt数据的读入问题!
+</p>
+</strong>
+<p class="fragment">
+关于编码问题: notepad++ .
+</p>
+<p class="fragment">
+关于数据类型,常用的有:
+</p>
+<ul>
+<li class="fragment">
+“c” character 字符串
+</li>
+<li class="fragment">
+“d” double 实数
+</li>
+<li class="fragment">
+“D” y-m-d 日期
+</li>
+<li class="fragment">
+“T” 时间日期型
+</li>
+</ul>
+</section><section id="csv" class="slide level2" data-transition="concave">
+<h1>.csv文件导入</h1>
+<p style="text-align:center" class="fragment">
+csv文件一般是用 <code>,</code> 来隔开数据的.
+</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 一般情况(utf-8):</span>
+
+<span class="kw">read_csv</span>(<span class="st">&quot;test-data/test.csv&quot;</span>, <span class="dt">col_names =</span> F,
+         <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">X6=</span><span class="st">&quot;c&quot;</span>,<span class="dt">X10=</span><span class="st">&quot;c&quot;</span>)) <span class="co">#特殊数据类型</span>
+
+<span class="co">#涉及到编码问题的:</span>
+
+<span class="kw">read_csv</span>(<span class="st">&quot;test-data/test-encoding.csv&quot;</span>,<span class="dt">col_names =</span> F,
+         <span class="dt">locale =</span> <span class="kw">locale</span>(<span class="dt">encoding =</span> <span class="st">&quot;GB2312&quot;</span>),  <span class="co">#编码问题</span>
+         <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">X6=</span><span class="st">&quot;c&quot;</span>,<span class="dt">X10=</span><span class="st">&quot;c&quot;</span>))      <span class="co">#数据类型</span></code></pre></div>
+</section><section id="left" class="slide level2" data-transition="fade">
+<h1>剩下的1%怎么办?</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#奇葩分隔符 &quot;|&quot;..</span>
+<span class="kw">read_delim</span>(<span class="dt">file =</span> <span class="st">&quot;文件名&quot;</span>, <span class="dt">delim=</span><span class="st">&quot;奇葩分隔符&quot;</span>, ...)
+
+<span class="co"># 逐行读入</span>
+<span class="kw">read_lines</span>(<span class="st">&quot;文件名&quot;</span>,<span class="dt">skip=</span><span class="dv">0</span>,<span class="dt">locale =</span> <span class="kw">locale</span>(<span class="dt">encoding =</span> <span class="st">&quot;编码&quot;</span>))
+
+<span class="co"># 读取粘贴板</span>
+<span class="kw">readClipboard</span>()</code></pre></div>
+<ul>
+<li class="fragment">逐行读入,简单粗暴, 但需要后续处理;</li>
+<li class="fragment">读取粘贴板的数据适用于少量快速操作;</li>
+<li class="fragment">更多: 文本处理利器之“正则表达式”.</li>
+</ul>
+<aside class="notes">
+1.逐行读入最简单粗暴,读进来后全部是字符串,后续的处理主要有分列, 数据类型转换等. 关于数据处理部分会在下一部分集中介绍<br> 2.对于字符串及文本数据的处理需要使用正则表达式,关于正则表达式会单独开一期培训,请大家密切关注
+</aside>
+</section><section id="xlsxlsx" class="slide level2">
+<h1>xls/xlsx数据的导入</h1>
+<p>这么常见的数据类型就不用多说了,直接上代码:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_excel</span>(<span class="st">&quot;xlsx/教院附小.xlsx&quot;</span>,<span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">col_names =</span> F)</code></pre></div>
+<ul>
+<li class="fragment">默认读取第一个sheet</li>
+<li class="fragment">默认“col_names=T”,第一行有变量名称</li>
+<li class="fragment">关于性能测试后面会讲到</li>
+</ul>
+<aside class="notes">
+<p>一行命令,方便实用.但其实也可以很复杂的去设置每一行的数据类型,最好的方法是在excel里面设置好数据的类型,这样就可以一行命令导入方便快捷.</p>
+</section><section id="sql" class="slide level2">
+<h1>SQL数据库导入</h1>
+<p>公司的数据库主要有SqlServer和MySQL</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;RODBC&quot;</span>,<span class="st">&quot;RMySQL&quot;</span>))
+<span class="kw">library</span>(RODBC)
+
+<span class="co">#ODBC连接MySQL,需要下载ODBC驱动</span>
+con &lt;-<span class="st"> </span><span class="kw">odbcConnect</span>(<span class="st">&quot;pcdp&quot;</span>)
+<span class="kw">odbcGetInfo</span>(con)  <span class="co">#查看连接信息</span>
+cog_memory &lt;-<span class="st"> </span><span class="kw">sqlQuery</span>(con,<span class="st">&quot;select * from tongyongbiao limit 6&quot;</span>,
+                       <span class="dt">stringsAsFactors=</span>F)
+cog_memory
+<span class="kw">odbcClose</span>(con)  <span class="co">#关掉接口</span>
+
+<span class="co">#写入</span>
+<span class="co"># sqlsave/sqlupdate</span>
+
+<span class="co">#通过RMySQL包直接连接MySQL</span>
+<span class="kw">library</span>(RMySQL)
+conn &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(RMySQL::<span class="kw">MySQL</span>(),<span class="dt">dbname=</span><span class="st">&quot;pcdp&quot;</span>,<span class="dt">username=</span><span class="st">&quot;****&quot;</span>,
+                  <span class="dt">password=</span><span class="st">&quot;****&quot;</span>,
+                  <span class="dt">host=</span><span class="st">&quot;psydb88pcdp.mysql.rds.aliyuncs.com&quot;</span>,
+                  <span class="dt">port=</span><span class="dv">3306</span>)
+<span class="kw">show</span>(conn)  <span class="co">#查看连接信息</span>
+<span class="kw">dbGetInfo</span>(conn)
+<span class="kw">dbSendQuery</span>(conn,<span class="st">&quot;set character set gbk&quot;</span>) <span class="co">#设置中文编码</span>
+res &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(conn,<span class="st">&quot;select * from tongyongbiao limit 6&quot;</span>)
+res
+<span class="kw">dbDisconnect</span>(conn)  <span class="co">#用完关掉接口</span>
+
+<span class="co">#写入</span>
+<span class="co">#sqlData</span></code></pre></div>
+<aside class="notes">
+1.提供两种方式连接数据库,通过ODBC连接MySQL的话需要下载驱动,设置参数更多,还能解决中文乱码问题.<br> 2.一般不要轻易的改动数据库里面的东西,用查询导入到R里面再进行各种操作.
+</aside>
+</section><section id="section" class="slide level2" data-background-transition="zoom" data-background="#74377B" data-transition="fade">
+<h1></h1>
+<h3>
+如果你能熟练使用上面命令,就已经走通了第一脉,接下来还需要<strong>修炼内功</strong>,才能走通第二脉.
+</h3>
+<p><img src="libs/imgs/doge.gif" width="200"></p>
+</section></section>
+<section><section id=".-" class="titleslide slide level1"><h1>二. 内功修炼之数据整理</h1></section><section class="slide level2">
+<h1>拆分/合并</h1>
+<iframe data-src="libs/pdf/separate-unite.pdf" width="900" height="600" frameborder="0" marginwidth="0" marginheight="0" style="border:3px solid #666; margin-bottom:5px; max-width:100%;max-height:100%">
+</iframe>
+</section><section class="slide level2">
+<h1>行转列</h1>
+<iframe data-src="libs/pdf/gather-spread.pdf" width="900" height="600" frameborder="0" marginwidth="0" marginheight="0" style="border:3px solid #666; margin-bottom:5px; max-width:100%;max-height:100%">
+</iframe>
+</section><section id="group_by" class="slide level2">
+<h1>group_by</h1>
+<iframe data-src="libs/pdf/group_by.pdf" width="900" height="600" frameborder="0" marginwidth="0" marginheight="0" style="border:3px solid #666; margin-bottom:5px; max-width:100%;max-height:100%">
+</iframe>
+</section><section class="slide level2">
+<h1>表连结</h1>
+<p>oneonte 画一张图</p>
+</section></section>
+<section><section id=".-" class="titleslide slide level1"><h1>三. 终结篇之结果输出</h1></section><section id="txtcsv" class="slide level2">
+<h1>导出txt/csv格式</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">write.csv</span>()
+<span class="kw">write_csv</span>()
+
+<span class="kw">write.table</span>()
+<span class="kw">write_tsv</span>()</code></pre></div>
+</section><section id="xlsx" class="slide level2">
+<h1>导出xlsx格式</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;openxlsx&quot;</span>)
+<span class="kw">library</span>(openxlsx)
+
+<span class="co">#单个sheet</span>
+<span class="kw">write.xlsx</span>(data1,<span class="dt">file =</span> <span class="st">&quot;xxx.xlsx&quot;</span>)
+
+<span class="co">#多页导出</span>
+wb &lt;-<span class="st"> </span><span class="kw">createWorkbook</span>()
+<span class="kw">addWorksheet</span>(wb,<span class="st">&quot;sheet1&quot;</span>)
+<span class="kw">addWorksheet</span>(wb,<span class="st">&quot;sheet2&quot;</span>)
+
+<span class="kw">writeData</span>(wb,<span class="dt">sheet =</span> <span class="dv">1</span>,data1)
+<span class="kw">writeData</span>(wb,<span class="dt">sheet =</span> <span class="dv">2</span>,data2)
+
+<span class="kw">saveWorkbook</span>(wb,<span class="st">&quot;xxx.xlsx&quot;</span>)</code></pre></div>
+</section>
+</section><section class="slide level2" data-background="#743778">
+<h1>案例实操时间</h1>
+<p><img src="libs/imgs/fast.gif" width="300"></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0/plugin/notes/notes.js', async: true },
+          { src: 'libs/reveal.js-3.3.0/plugin/zoom-js/zoom.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

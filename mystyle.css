@@ -1,0 +1,31 @@
+.reveal {
+  background:#232C31;
+}
+.reveal pre code {
+  background-color:#222222  ;
+}
+.reveal h1 {
+  color:#18c9c9;
+}
+.reveal h2 {
+  color:#8B99A1;
+}
+/*背景颜色*/
+
+.reveal p {
+  text-align:left;
+  font-size: 26px;
+}
+
+.reveal li {
+  font-size: 24px;
+}
+#left {
+  text-align:left;
+}
+
+.reveal section img{
+  display:block;
+  margin:auto;
+  clear:both;
+}
