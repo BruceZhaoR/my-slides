@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="赵 炜" />
+  <meta name="dcterms.date" content="2016-11-20" />
+  <title>Docker,让R有更多的可能</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="libs/reveal.js-3.3.0/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="libs/reveal.js-3.3.0/css/theme/black.css" id="theme">
+
+<style type="text/css">
+.reveal section img {
+  background: rgba(255, 255, 255, 0.85);
+}
+</style>
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="mystyle.css"/>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'libs/reveal.js-3.3.0/css/print/pdf.css' : 'libs/reveal.js-3.3.0/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+    <script src="libs/reveal.js-3.3.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <link href="libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Docker,让R有更多的可能</h1>
+    <h2 class="author">赵 炜</h2>
+    <h3 class="date">November 20, 2016</h3>
+</section>
+
+<section>
+
+<section class="titleslide slide level1" data-transition="slide" data-background="#743778"><h1>一、什么是Docker？</h1></section>
+
+<section class="slide level2">
+<h1>开源的应用容器引擎</h1>
+<p><img src="libs/imgs/moby.svg" width="800",height="600"></p>
+<aside class="notes">Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</aside>
+</section>
+
+<section class="slide level2">
+<h1>基本架构</h1>
+<p><img src="libs/imgs/vm-vs-docker-architecture1.png" width="800" height="500"></p>
+</section>
+
+</section>
+
+<section>
+
+<section class="titleslide slide level1" data-background="#743778"><h1>docker能解决什么问题?</h1>
+<aside class="notes"> 程序员之争--谁的bug？ 环境的不统一。。</aside>
+</section>
+
+<section class="slide level2">
+<h1>统一开发、测试、运维环境</h1>
+<p>传统的开发过程中，开发、测试、运维是三个独立运作的团队，团队之间沟通不畅，开发运维之间冲突时有发生，导致协作效率低下，产品交付延迟。</p>
+</section>
+
+<section class="slide level2">
+<h1>能部署在任何环境中</h1>
+<p>Docker技术将应用以集装箱的方式打包交付，使应用在不同的团队中共享，通过镜像的方式应用可以部署于任何环境中。</p>
+</section>
+
+<section class="slide level2">
+<h1>完全隔离，各项目不受影响</h1>
+<p>docker里面的容器是完全使用沙箱机制，相互之间不会有任何接口。</p>
+</section>
+
+<section class="slide level2">
+<h1>docker优势总结</h1>
+<ul>
+<li class="fragment">一次部署跨平台通用</li>
+<li class="fragment">启动速度快</li>
+<li class="fragment">资源独立、隔离</li>
+<li class="fragment">丰富的镜像组合，总有一款适合你</li>
+<li class="fragment">灵活的镜像构建代码</li>
+</ul>
+</section>
+
+</section>
+
+<section>
+<section id="docker-r" class="titleslide slide level1" data-transition="slide" data-background="#743778"><h1>docker + R</h1>
+<aside class="notes">docker + R能发生什么反应呢？我们先来看看常见的问题</aside>
+</section>
+
+<section id="windows" class="slide level2">
+<h1>windows用户永远的痛</h1>
+<p>除了中文乱码这个巨坑，还有一个更痛心的是最新最火的开源机器学习，深度学习框架一般一开始都不支持windows。特别是服务器类的 shiny-server、rstudio-server。</p>
+</section>
+
+<section class="slide level2">
+<h1>快速部署科学计算环境</h1>
+<p>我有一次在windows上面想体验一把sparklyr，各种连接问题，报错，不得不中途放弃。</p>
+<p>现在有了docker，不用为了配环境而折腾到天亮，一个容器解决问题。</p>
+</section>
+</section>
+
+<section>
+<section class="titleslide slide level1" data-background="#743778"><h1>操作演示时间</h1></section>
+
+<section class="slide level2" >
+<h1>案例实操时间</h1>
+<h3>
+小赵带你飞
+</h3>
+<p><img src="libs/imgs/fast.gif" width="300"></p>
+</section>
+</section>
+
+<section>
+<strong><p style="font-size:28px;text-align:center;">谢谢大家！<p></strong>
+<p><img src="libs/imgs/brucezhaor.jpg" height="600"></p>
+<p style="text-align:center">个人博客：<a href="http://brucezhaor.github.io">http://brucezhaor.github.io</a>;    学习交流社区<a href="http://bzrlc.tech">http://bzrlc.tech</a></p>
+</section>
+
+
+    </div>
+  </div>
+
+  <script src="libs/reveal.js-3.3.0/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js-3.3.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'libs/reveal.js-3.3.0/plugin/notes/notes.js', async: true },
+          { src: 'libs/reveal.js-3.3.0/plugin/zoom-js/zoom.js', async: true },
+          { src: 'libs/reveal.js-3.3.0/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
