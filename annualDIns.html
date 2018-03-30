@@ -12,7 +12,6 @@ var myChart = echarts.init(dom);
 var app = {};
 option = null;
 app.title = '折柱混合';
-
 option = {
     //color=['#999922', '#992222'],
     tooltip: {
@@ -23,6 +22,9 @@ option = {
                 color: '#999'
             }
         }
+    },
+    grid:{
+        right:'20%'
     },
     toolbox: {
         feature: {
@@ -50,8 +52,8 @@ option = {
             name: '车年',
             //min: 0,
             //max: 250,
-            interval: 50,
-           position: 'left',
+            //interval: 50,
+            position: 'left',
             axisLabel: {
                 formatter: '{value}'
             },
@@ -66,8 +68,9 @@ option = {
             name: '出险率',
             //min: 0,
             //max: 25,
-            interval: 5,
-           position: 'right',
+            //interval: 5,
+            position: 'right',
+            offset: 60,
             axisLabel: {
                 formatter: '{value}%'
             },
@@ -82,14 +85,15 @@ option = {
             name: '赔付率',
             //min: 0,
             //max: 25,
-            interval: 5,
-           position: 'right',
+            //interval: 5,
+            position: 'right',
+            offset: 120,
             axisLabel: {
                 formatter: '{value}%'
             },
             axisLine: {
                 lineStyle:{
-                    color:'#669922'
+                    color:'#666688'
                 }
             }
         },
@@ -98,14 +102,15 @@ option = {
             name: '案均赔款',
             //min: 0,
             //max: 25,
-            interval: 5,
-           position: 'right',
+            //interval: 5,
+            position: 'right',
+            offset: 180,
             axisLabel: {
                 formatter: '{value}'
             },
             axisLine: {
                 lineStyle:{
-                    color:'#889922'
+                    color:'#884422'
                 }
             }
         },
@@ -114,14 +119,15 @@ option = {
             name: '纯风险损失成本',
             //min: 0,
             //max: 25,
-            interval: 5,
-           position: 'right',
+            //interval: 5,
+            position: 'right',
+            offset: 260,
             axisLabel: {
                 formatter: '{value}'
             },
             axisLine: {
                 lineStyle:{
-                    color:'#779922'
+                    color:'#118822'
                 }
             }
         }
@@ -154,7 +160,7 @@ option = {
             data:[13,16,20,23,25],
             label:{show:true, formatter:'{c}%'},
             itemStyle:{
-                color:'#669922'
+                color:'#666688'
             }
         },
         {
@@ -162,9 +168,9 @@ option = {
             type:'line',
             yAxisIndex: 4,
             data:[100,200,300,300,350],
-            label:{show:true, formatter:'{c}%'},
+            label:{show:true, formatter:'{c}'},
             itemStyle:{
-                color:'#779922'
+                color:'#118822'
             }
         },
         {
@@ -172,9 +178,9 @@ option = {
             type:'line',
             yAxisIndex: 3,
             data:[200,400,800,800,900],
-            label:{show:true, formatter:'{c}%'},
+            label:{show:true, formatter:'{c}'},
             itemStyle:{
-                color:'#889922'
+                color:'#884422'
             }
         }
     ]
