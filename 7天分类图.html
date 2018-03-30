@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '折柱混合';
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data:['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: ['0%~10%','10%~20%','20%~30%','30%~40%','40%~50%','50%~60%','60%~70%','70%~80%','80%~90%','90%~100%'],
+            axisPointer: {
+                type: 'shadow'
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '用户数',
+            //min: 0,
+            //max: 250,
+            interval: 50,
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        {
+            type: 'value',
+            name: '赔付率',
+            //min: 0,
+            //max: 25,
+            interval: 5,
+            axisLabel: {
+                formatter: '{value}%'
+            }
+        }
+    ],
+    series: [
+    {
+        name:'星期一',
+        type:'bar',
+        data:[3, 30, 50, 25, 20, 10, 8, 4, 2, 0]
+    },{
+        name:'星期二',
+        type:'bar',
+        data:[1, 31, 52, 25, 20, 12, 3, 4, 2, 0]
+    },{
+        name:'星期三',
+        type:'bar',
+        data:[6, 32, 54, 20, 20, 12, 4, 4, 2, 0]
+    },{
+        name:'星期四',
+        type:'bar',
+        data:[3, 33, 56, 21, 20, 13, 6, 4, 2, 0]
+    },{
+        name:'星期五',
+        type:'bar',
+        data:[7, 34, 58, 22, 20, 4, 2, 1, 2, 0]
+    },{
+        name:'星期六',
+        type:'bar',
+        data:[2, 2, 10, 30, 50, 25, 20, 10, 8, 4]
+    },{
+        name:'星期日',
+        type:'bar',
+        data:[2, 2, 8, 10, 30, 50, 25, 20, 10, 8]
+    },{
+        name:'星期一',
+        type:'line',
+        yAxisIndex: 1,
+        data:[1,2,3,4,5,6,7,8,9,10],
+        lineStyle:{width:3},
+        symbol: 'circle',
+        symbolSize: 12,
+        zlevel: 1
+    },{
+        name:'星期二',
+        type:'line',
+        yAxisIndex: 1,
+        data:[2,3,4,5,6,7,8,9,2,10],
+        lineStyle:{width:3},
+        symbol: 'rect',
+        symbolSize: 12,
+        zlevel: 1
+    },{
+        name:'星期三',
+        type:'line',
+        yAxisIndex: 1,
+        data:[3,4,5,6,7,8,9,6,3,2],
+        lineStyle:{width:3},
+        symbol: 'roundRect',
+        symbolSize: 12,
+        zlevel: 1
+    },{
+        name:'星期四',
+        type:'line',
+        yAxisIndex: 1,
+        data:[6,1,5,4,5,1,5,8,2,2],
+        lineStyle:{width:3},
+        symbol: 'triangle',
+        symbolSize: 12,
+        zlevel: 1
+    },{
+        name:'星期五',
+        type:'line',
+        yAxisIndex: 1,
+        data:[6,4,3,2,5,7,4,2,6,3],
+        lineStyle:{width:3},
+        symbol: 'diamond',
+        symbolSize: 12,
+        zlevel: 1
+    },{
+        name:'星期六',
+        type:'line',
+        yAxisIndex: 1,
+        data:[4,2,5,6,2,12,14,15,16,22],
+        lineStyle:{width:3},
+        symbol: 'pin',
+        symbolSize: 12,
+        zlevel: 1
+    },{
+        name:'星期日',
+        type:'line',
+        yAxisIndex: 1,
+        data:[5,3,2,5,1,15,18,23,25,30],
+        lineStyle:{width:3},
+        symbol: 'arrow',
+        symbolSize: 12,
+        zlevel: 1
+    }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
