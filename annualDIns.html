@@ -74,6 +74,51 @@ option = {
                     color:'#999922'
                 }
             }
+        },
+        {
+            type: 'value',
+            name: '赔付率',
+            //min: 0,
+            //max: 25,
+            interval: 5,
+            axisLabel: {
+                formatter: '{value}%'
+            },
+            axisLine: {
+                lineStyle:{
+                    color:'#669922'
+                }
+            }
+        },
+        {
+            type: 'value',
+            name: '案均赔款',
+            //min: 0,
+            //max: 25,
+            interval: 5,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            axisLine: {
+                lineStyle:{
+                    color:'#889922'
+                }
+            }
+        },
+        {
+            type: 'value',
+            name: '纯风险损失成本',
+            //min: 0,
+            //max: 25,
+            interval: 5,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            axisLine: {
+                lineStyle:{
+                    color:'#779922'
+                }
+            }
         }
     ],
     series: [
@@ -104,7 +149,7 @@ option = {
             data:[13,16,20,23,25],
             label:{show:true, formatter:'{c}%'},
             itemStyle:{
-                color:'#999922'
+                color:'#669922'
             }
         },
         {
@@ -114,7 +159,7 @@ option = {
             data:[100,200,300,300,350],
             label:{show:true, formatter:'{c}%'},
             itemStyle:{
-                color:'#999922'
+                color:'#779922'
             }
         },
         {
@@ -124,7 +169,7 @@ option = {
             data:[200,400,800,800,900],
             label:{show:true, formatter:'{c}%'},
             itemStyle:{
-                color:'#999922'
+                color:'#889922'
             }
         }
     ]
