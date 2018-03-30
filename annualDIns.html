@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://echarts.baidu.com/dist/echarts.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '折柱混合';
+
+option = {
+    //color=['#999922', '#992222'],
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data:['车年','出险率']
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: ['(0,5000]','(5000,10000]','(10000,15000]','(15000,20000]','(20000,25000]'],
+            axisPointer: {
+                type: 'shadow'
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '车年',
+            //min: 0,
+            //max: 250,
+            interval: 50,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            axisLine: {
+                lineStyle:{
+                    color:'#992222'
+                }
+            }
+        },
+        {
+            type: 'value',
+            name: '出险率',
+            //min: 0,
+            //max: 25,
+            interval: 5,
+            axisLabel: {
+                formatter: '{value}%'
+            },
+            axisLine: {
+                lineStyle:{
+                    color:'#999922'
+                }
+            }
+        }
+    ],
+    series: [
+        {
+            name:'车年',
+            type:'bar',
+            barWidth:100,
+            data:[234, 523, 901,1509, 678],
+            label:{show:true},
+            itemStyle:{
+                color:'#992222'
+            }
+        },
+        {
+            name:'出险率',
+            type:'line',
+            yAxisIndex: 1,
+            data:[10,18,24,26,27],
+            label:{show:true, formatter:'{c}%'},
+            itemStyle:{
+                color:'#999922'
+            }
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
